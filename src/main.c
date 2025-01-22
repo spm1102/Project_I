@@ -3,16 +3,16 @@
 int main()
 {
     float*** dyna_input = TENSOR3D_Create(1, 224, 224);
-    // for (int i = 0; i < 1; i++)
-    // {
-    //     for (int j = 0; j < 224; j++)
-    //     {
-    //         for (int k = 0; k < 224; k++)
-    //         {
-    //             dyna_input[i][j][k] = (float)rand() / RAND_MAX;
-    //         }
-    //     }
-    // }
+    for (int i = 0; i < 1; i++)
+    {
+        for (int j = 0; j < 224; j++)
+        {
+            for (int k = 0; k < 224; k++)
+            {
+                dyna_input[i][j][k] = (float)rand() / RAND_MAX;
+            }
+        }
+    }
     //Conv1, BN1
     float ****filter_7x7 = TENSOR4D_Create(64, 1, 7, 7);
     read_file("src/input/net.0.0.weight_64.1.7.7.txt", filter_7x7, 64, 1, 7, 7);
