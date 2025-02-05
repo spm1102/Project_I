@@ -2,17 +2,15 @@
 
 int main()
 {
-    float*** dyna_input = TENSOR3D_Create(1, 224, 224);
-    for (int i = 0; i < 1; i++)
-    {
-        for (int j = 0; j < 224; j++)
-        {
-            for (int k = 0; k < 224; k++)
-            {
-                dyna_input[i][j][k] = (float)rand() / RAND_MAX;
-            }
-        }
-    }
+    float*** dyna_input = TENSOR3D_Create(1, 28, 28);
+    INPUT_read_file("input_data/fashion_mnist_txt/image_1_label_2.txt", dyna_input, 1, 28, 28);
+    float*** input_resize = TENSOR3D_Create(1, 224, 224);
+    resize_image(dyna_input, input_resize);
+    FILE *file = fopen("input.txt", "w");
+    if (file == NULL) {
+        printf("Không thể mở file để ghi!\n");
+        return 1;
+    }    
     //Conv1, BN1
     float ****filter_7x7 = TENSOR4D_Create(64, 1, 7, 7);
     read_file("src/input/net.0.0.weight_64.1.7.7.txt", filter_7x7, 64, 1, 7, 7);
@@ -54,7 +52,7 @@ int main()
     
 
     //initial layer
-    float ***conv1 = Conv2D(dyna_input, 224, 224, 1, 64, filter_7x7, 7, 7, 3, 2, 0);//-> 112 x 112 x 64
+    float ***conv1 = Conv2D(input_resize, 224, 224, 1, 64, filter_7x7, 7, 7, 3, 2, 0);//-> 112 x 112 x 64
     batchnorm_4d(conv1, 112, 112, 64, gama_1, beta_1, EPSILON);
     conv1 = ReLU(conv1, 112, 112, 64);
     float*** p_maxPooling = MAX_Pooling(conv1, 112, 112, 64, 3, 2, 1);                              // -> 56 x 56 x 64
@@ -262,8 +260,8 @@ int main()
     // AVG POOLING LAYER
     float*** p_avgPooling = AVG_Pooling(conv17, 7, 7, 512, 7, 1, 0);                               //-> 1 x 1 x 512
     //FC LAYER
-    float** weight_T = MATRIX_Create(512, 10);
-    FC_readData("src/input/net.last.2.weight_10.512.txt", weight_T, 512, 10);
+    float** weight_T = MATRIX_Create(10, 512);
+    FC_readData("src/input/net.last.2.weight_10.512.txt", weight_T, 10, 512);
     float* output = (float*)malloc(sizeof(float) * 10);
     if(!output){
         return 1;
@@ -282,8 +280,8 @@ int main()
         printf("%f ", output[i]);
     }
     
-    
-    TENSOR3D_Free(dyna_input, 1, 224, 224);
+    TENSOR3D_Free(dyna_input, 1, 28, 28);
+    TENSOR3D_Free(input_resize, 1, 224, 224);
     TENSOR3D_Free(conv1, 64, 112, 112);
     TENSOR3D_Free(p_maxPooling, 64, 56, 56);
     TENSOR3D_Free(conv2, 64, 56, 56);
@@ -348,7 +346,7 @@ int main()
     TENSOR4D_Free(filter_512x512x3x3_3, 512, 512, 3, 3);
     BatchNorm_free(gama_17, beta_17);
 
-    MATRIX_Free(weight_T, 512, 10);
+    MATRIX_Free(weight_T, 10, 512);
 
     free(result);
     free(output);
