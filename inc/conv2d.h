@@ -9,7 +9,8 @@
 
 #define EPSILON 1e-5
 
-float ***Conv2D(float ***input, int in_width, int in_height, int in_filters, int out_filters, float ****kernel, int kernel_width, int kernel_height, int padding, int strides, int bias);
+float ***Conv2D(float ***input, int in_width, int in_height, int in_filters, int out_filters, float ****kernel, 
+                int kernel_width, int kernel_height, int padding, int strides, float* bias);
 float ***Padding(float ***input, int in_width, int in_height, int in_filters, int padding);
 float ***MAX_Pooling(float ***input, int in_width, int in_height, int in_filters, int kernel_size, int strides, int padding);
 float ***AVG_Pooling(float ***input, int in_width, int in_height, int in_filters, int kernel_size, int strides, int padding);
@@ -19,6 +20,8 @@ float* Softmax(float *input, int length);
 float ***ReLU(float ***input, int in_width, int in_height, int in_filters);
 float *Flatten(float*** input, int in_width, int in_height, int in_filters);
 float ***ADD_SKIP_CONNECTION(float*** input, float*** output, int width, int height, int channels);
-void batchnorm_4d(float ***input, int height, int width, int num_channels, float *gamma, float *beta, float epsilon);
-void BatchNorm_free(float *gamma, float *beta);
+void batchnorm_4d(float ***input, int height, int width, int num_channels, float *gamma, float *beta, 
+                float* running_mean, float* running_var, float epsilon);
+void BatchNorm_free(float *gamma, float *beta, float* mean, float* var);
+float** Transpose(float** input, int in_width, int in_height);
 #endif

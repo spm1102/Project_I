@@ -130,30 +130,4 @@ void resize_image(float ***input, float ***output)
     }
 }
 
-// // Hàm chính để xử lý ảnh MNIST
-// float ***preprocess_mnist(const char *filepath)
-// {
-//     // Đọc ảnh từ file
-//     unsigned char *mnist_image = load_mnist_image(filepath);
-//     if (!mnist_image)
-//     {
-//         return NULL;
-//     }
 
-//     // Cấp phát mảng 3 chiều
-//     float ***resized_image = TENSOR3D_Create(BATCH_SIZE, RESNET_SIZE, RESNET_SIZE);
-//     if (!resized_image)
-//     {
-//         free(mnist_image);
-//         printf("Memory allocation failed!\n");
-//         return NULL;
-//     }
-
-//     // Resize và normalize ảnh
-//     resize_image(mnist_image, resized_image);
-
-//     // Giải phóng bộ nhớ tạm
-//     free(mnist_image);
-
-//     return resized_image;
-// }

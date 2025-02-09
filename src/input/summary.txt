@@ -1,4 +1,0 @@
-Summary:
-Total parameters: 11178378
-Trainable parameters: 11178378
-Non-trainable parameters: 0
