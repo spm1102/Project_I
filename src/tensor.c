@@ -1,27 +1,5 @@
 #include "tensor.h"
 
-float **TENSOR2D_Get(float **input, int in_width, int in_height, float **tensor2d, int kernel_width, int kernel_height, int curr_row, int curr_col, int strides)
-{
-    // Check if the requested kernel fits within the input matrix
-    if (curr_row + (kernel_width - 1) * strides + 1 > in_height ||
-        curr_col + (kernel_height - 1) * strides + 1 > in_width)
-    {
-        printf("Kernel out of input matrix bounds!\n");
-        return NULL;
-    }
-
-    for (int i = 0; i < kernel_width; ++i)
-    {
-        for (int j = 0; j < kernel_height; ++j)
-        {
-            int input_row = curr_row + i * strides;
-            int input_col = curr_col + j * strides;
-            tensor2d[i][j] = input[input_row][input_col];
-        }
-    }
-    return tensor2d;
-}
-
 float ***TENSOR3D_Create(int channel, int width, int height)
 {
     float ***tensor3D = (float ***)malloc(channel * sizeof(float **));

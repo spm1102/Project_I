@@ -11,5 +11,4 @@ void read_file(const char *file_path, float ****buffer, int out_filter, int chan
 void FC_readData(const char *file_path, float** buffer, int width, int height);
 void batchNorm_readData(const char *file_path, float* buffer, int size);
 void resize_image(float*** input, float*** output);
-//float*** preprocess_mnist(const char* filepath);
 #endif

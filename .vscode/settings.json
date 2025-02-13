@@ -61,6 +61,8 @@
   "files.associations": {
     "matrix.h": "c",
     "conv2d.h": "c",
-    "kernel.h": "c"
+    "kernel.h": "c",
+    "input.h": "c",
+    "tensor.h": "c"
   }
 }
